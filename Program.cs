@@ -20,12 +20,12 @@ namespace TestCollection
         {
             DevExpress.XtraSplashScreen.SplashScreenManager.ShowForm(typeof(SplashForm));
             //创建数据库目录
-            var dataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
-            if (Directory.Exists(dataPath) == false)
-            {
-                Directory.CreateDirectory(dataPath);
-            }
-            AppDomain.CurrentDomain.SetData("DataDirectory", dataPath);
+            //var dataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
+            //if (Directory.Exists(dataPath) == false)
+            //{
+            //    Directory.CreateDirectory(dataPath);
+            //}
+            AppDomain.CurrentDomain.SetData("DataDirectory", AppDomain.CurrentDomain.BaseDirectory);
 
             //异常处理
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

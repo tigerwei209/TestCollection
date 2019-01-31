@@ -21,6 +21,7 @@ namespace TestCollection
 
         private string courseFilter = string.Empty;
         private string otherFilter = string.Empty;
+        public static Conditions conditions = new Conditions();
         public Main()
         {
             DevExpress.XtraSplashScreen.SplashScreenManager.CloseForm();
@@ -62,10 +63,10 @@ namespace TestCollection
                     if (e.Item.Caption == "其他")
                     {
                         //其他
-                        var dr = ChooseTestItem.Instance.Value.ShowDialog(editForm.Tags);
+                        var dr = ChooseTestItem.Instance.ShowDialog(editForm.Tags);
                         if (dr == DialogResult.OK)
                         {
-                            otherFilter = ChooseTestItem.Instance.Value.FilterString;
+                            otherFilter = ChooseTestItem.Instance.FilterString;
                         }
                     }
                     else
@@ -197,11 +198,11 @@ namespace TestCollection
         private void gridView_CustomRowFilter(object sender, DevExpress.XtraGrid.Views.Base.RowFilterEventArgs e)
         {
             var dataSource = gridView.DataSource as List<Core.TestItem>;
-            if (!dataSource[e.ListSourceRow].Tags.Split(',').Contains("其他"))
-            {
-                e.Visible = false;
-                e.Handled = true;
-            }
+            //if (!dataSource[e.ListSourceRow].Tags.Split(',').Contains("其他"))
+            //{
+            //    e.Visible = false;
+            //    e.Handled = true;
+            //}
             //todo
             //gridView
         }
