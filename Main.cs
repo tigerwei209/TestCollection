@@ -16,7 +16,7 @@ namespace TestCollection
     public partial class Main : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         private TestItemEdit editForm = new TestItemEdit();
-        
+
         private DevExpress.XtraRichEdit.RichEditControl richEditControl;
 
         private string courseFilter = string.Empty;
@@ -57,7 +57,7 @@ namespace TestCollection
             //选题
             foreach (var item in ribbonPageGroup3.ItemLinks.AsEnumerable())
             {
-                item.Item.ItemClick += (s, e) => 
+                item.Item.ItemClick += (s, e) =>
                 {
                     StringBuilder filterString = new StringBuilder();
                     if (e.Item.Caption == "其他")
@@ -66,7 +66,7 @@ namespace TestCollection
                         var dr = ChooseTestItem.Instance.ShowDialog(editForm.Tags);
                         if (dr == DialogResult.OK)
                         {
-                            otherFilter = ChooseTestItem.Instance.FilterString;
+                            //otherFilter = ChooseTestItem.Instance.FilterString;
                         }
                     }
                     else
@@ -79,25 +79,28 @@ namespace TestCollection
 
                         if (e.Item.Caption == "全部")
                         {
-                            courseFilter = string.Empty;
+                            //courseFilter = string.Empty;
+                            conditions.Course = string.Empty;
                         }
                         else
                         {
-                            courseFilter = $"[Course] = '{e.Item.Caption}'";
+                            //courseFilter = $"[Course] = '{e.Item.Caption}'";
+                            conditions.Course = e.Item.Caption;
                         }
                     }
 
-                    filterString.Append(courseFilter);
-                    if (!string.IsNullOrEmpty(courseFilter) && !string.IsNullOrEmpty(otherFilter))
-                    {
-                        filterString.Append(" AND ");
-                    }
-                    filterString.Append(otherFilter);
-                    
-                    gridView.ActiveFilterString = filterString.ToString();
+                    //filterString.Append(courseFilter);
+                    //if (!string.IsNullOrEmpty(courseFilter) && !string.IsNullOrEmpty(otherFilter))
+                    //{
+                    //    filterString.Append(" AND ");
+                    //}
+                    //filterString.Append(otherFilter);
+
+                    //gridView.ActiveFilterString = filterString.ToString();
+                    gridView.RefreshData();
                 };
             }
-            
+
         }
 
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
@@ -121,7 +124,7 @@ namespace TestCollection
                 richEditControl.Document.AppendText($"{i + 1}.");
                 richEditControl.Document.AppendHtmlText(item.ItemContent);
             }
-            
+
             richEditControl.ShowPrintPreview();
         }
 
@@ -167,7 +170,7 @@ namespace TestCollection
             editForm.Item = item;
             editForm.ShowDialog();
         }
-        
+
         private void bbiDelete_ItemClick(object sender, ItemClickEventArgs e)
         {
             var rows = gridView.GetSelectedRows();
@@ -198,13 +201,58 @@ namespace TestCollection
         private void gridView_CustomRowFilter(object sender, DevExpress.XtraGrid.Views.Base.RowFilterEventArgs e)
         {
             var dataSource = gridView.DataSource as List<Core.TestItem>;
+            var item = dataSource[e.ListSourceRow];
             //if (!dataSource[e.ListSourceRow].Tags.Split(',').Contains("其他"))
             //{
             //    e.Visible = false;
             //    e.Handled = true;
             //}
-            //todo
-            //gridView
+            e.Visible = ItemFilter(item);
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// 项目过滤
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>满足过滤条件返回true,否则false</returns>
+        public bool ItemFilter(Core.TestItem item)
+        {
+            if (!(string.IsNullOrEmpty(conditions.Course) || item.Course == conditions.Course))
+            {
+                return false;
+            }
+            if (!(conditions.Grade == null || item.Grade == conditions.Grade))
+            {
+                return false;
+            }
+            if (!(conditions.Semester == null || item.Semester == conditions.Semester))
+            {
+                return false;
+            }
+            if (conditions.Tags != null && conditions.Tags.Count > 0)
+            {
+                var tags = item.Tags?.Split(',');
+                if (tags == null || tags.Length == 0)
+                {
+                    return false;
+                }
+                var containsTag = false;
+                foreach (var tag in tags)
+                {
+                    if (conditions.Tags.Contains(tag))
+                    {
+                        containsTag = true;
+                        break;
+                    }
+                }
+                if (containsTag == false)
+                {
+                    return false;
+                }
+            }
+            //题型，及随机题数
+            return true;
         }
     }
 }

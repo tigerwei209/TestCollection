@@ -23,7 +23,7 @@ namespace TestCollection
         public static ChooseTestItem Instance { get { return _instance.Value; } }
 
         public string FilterString { get; set; }
-        
+
         private ChooseTestItem()
         {
             InitializeComponent();
@@ -33,23 +33,47 @@ namespace TestCollection
             cbSemester.Properties.Items.Insert(0, new ImageComboBoxItem("", null));
 
             testItemTypeControls.Add(ceNoLimit, seNoLimit);
+            ceNoLimit.Tag = 0;
+
             testItemTypeControls.Add(ceChoose, seChoose);
+            ceChoose.Tag = (int)Core.TestItemType.Choose;
+
             testItemTypeControls.Add(ceTrueFalse, seTrueFalse);
+            ceTrueFalse.Tag = (int)Core.TestItemType.TrueFalse;
+
             testItemTypeControls.Add(ceQAndA, seQAndA);
+            ceQAndA.Tag = (int)Core.TestItemType.QAndA;
+
             testItemTypeControls.Add(ceFill, seFill);
+            ceFill.Tag = (int)Core.TestItemType.Fill;
         }
-        
+
         public DialogResult ShowDialog(IEnumerable<string> tags)
         {
-            var checkedTags = Main.conditions.Tags; //tagsList.Where(c => c.Checked == true).ToList();
+            cbGrade.EditValue = Main.conditions.Grade;
+            cbSemester.EditValue = Main.conditions.Semester;
+
+            var checkedTags = Main.conditions.Tags;
             tagsList.Clear();
             layoutControlGroup2.Clear();
             foreach (var tag in tags)
             {
                 var isChecked = checkedTags?.Exists(t => t == tag);
-                var checkEdit = new CheckEdit() { Text = tag, AutoSizeInLayoutControl = true, Checked = isChecked??false };
+                var checkEdit = new CheckEdit() { Text = tag, AutoSizeInLayoutControl = true, Checked = isChecked ?? false };
                 tagsList.Add(checkEdit);
                 layoutControlGroup2.AddItem("", checkEdit);
+            }
+
+            if (Main.conditions.ItemTypes != null)
+            {
+                foreach (var item in testItemTypeControls)
+                {
+                    if (Main.conditions.ItemTypes.ContainsKey((int)item.Key.Tag))
+                    {
+                        item.Key.Checked = true;
+                        item.Value.Value = Main.conditions.ItemTypes[(int)item.Key.Tag];
+                    }
+                }
             }
             return ShowDialog();
         }
@@ -80,16 +104,19 @@ namespace TestCollection
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            List<string> filters = new List<string>();
-            if (cbGrade.EditValue != null)
-            {
-                filters.Add($"[Grade] = {(int)cbGrade.EditValue}");
-            }
-            if (cbSemester.EditValue != null)
-            {
-                filters.Add($"[Semester] = {(int)cbSemester.EditValue}");
-            }
-            FilterString = string.Join(" AND ", filters);
+            //List<string> filters = new List<string>();
+            //if (cbGrade.EditValue != null)
+            //{
+            //    filters.Add($"[Grade] = {(int)cbGrade.EditValue}");
+            //}
+            //if (cbSemester.EditValue != null)
+            //{
+            //    filters.Add($"[Semester] = {(int)cbSemester.EditValue}");
+            //}
+            //FilterString = string.Join(" AND ", filters);
+
+            Main.conditions.Grade = cbGrade.EditValue as Core.GradeEnum?;
+            Main.conditions.Semester = cbSemester.EditValue as Core.SemesterEnum?;
 
             List<string> tags = new List<string>();
             foreach (var tag in tagsList)
@@ -106,8 +133,28 @@ namespace TestCollection
             {
                 if (item.Key.Checked)
                 {
-                    //todo
+                    itemTypes.Add((int)item.Key.Tag, (int)item.Value.Value);
                 }
+            }
+            Main.conditions.ItemTypes = itemTypes;
+        }
+
+        /// <summary>
+        /// 重置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+            cbGrade.EditValue = null;
+            cbSemester.EditValue = null;
+            foreach (var tag in tagsList)
+            {
+                tag.Checked = false;
+            }
+            foreach (var item in testItemTypeControls)
+            {
+                item.Key.Checked = false;
             }
         }
     }
