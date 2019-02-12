@@ -17,10 +17,7 @@ namespace TestCollection
     {
         private TestItemEdit editForm = new TestItemEdit();
 
-        private DevExpress.XtraRichEdit.RichEditControl richEditControl;
-
-        private string courseFilter = string.Empty;
-        private string otherFilter = string.Empty;
+        private List<Core.TestItem> testItems;
         public static Conditions conditions = new Conditions();
         public Main()
         {
@@ -49,24 +46,22 @@ namespace TestCollection
             {
                 if (args.IsNew)
                 {
-                    var dataSource = gridControl.DataSource as List<Core.TestItem>;
-                    dataSource.Add(args.Item);
+                    testItems.Add(args.Item);
                 }
-                gridView.RefreshData();
+                FilterAndBindData(testItems);
             };
             //选题
             foreach (var item in ribbonPageGroup3.ItemLinks.AsEnumerable())
             {
                 item.Item.ItemClick += (s, e) =>
                 {
-                    StringBuilder filterString = new StringBuilder();
                     if (e.Item.Caption == "其他")
                     {
                         //其他
                         var dr = ChooseTestItem.Instance.ShowDialog(editForm.Tags);
-                        if (dr == DialogResult.OK)
+                        if (dr != DialogResult.OK)
                         {
-                            //otherFilter = ChooseTestItem.Instance.FilterString;
+                            return;
                         }
                     }
                     else
@@ -97,7 +92,8 @@ namespace TestCollection
                     //filterString.Append(otherFilter);
 
                     //gridView.ActiveFilterString = filterString.ToString();
-                    gridView.RefreshData();
+                    //gridView.RefreshData();
+                    FilterAndBindData(testItems);
                 };
             }
 
@@ -106,26 +102,21 @@ namespace TestCollection
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
             //gridControl.ShowRibbonPrintPreview();
-            if (richEditControl == null)
-            {
-                richEditControl = new DevExpress.XtraRichEdit.RichEditControl();
-            }
-            richEditControl.Views.SimpleView.WordWrap = false;
-            //richEditControl.Document.
-            richEditControl.Text = ""; //清空
 
+            PrintForm printForm = new PrintForm();
+            //richEditControl.Views.SimpleView.WordWrap = false;
+            printForm.Clear();
             for (int i = 0; i < gridView.DataRowCount; i++)
             {
                 if (i > 0)
                 {
-                    richEditControl.Document.AppendText("\r\n\r\n");
+                    printForm.DocAppendText("\r\n\r\n");
                 }
                 var item = gridView.GetRow(i) as Core.TestItem;
-                richEditControl.Document.AppendText($"{i + 1}.");
-                richEditControl.Document.AppendHtmlText(item.ItemContent);
+                printForm.DocAppendText($"{i + 1}. ");
+                printForm.DocAppendHtmlText(item.ItemContent);
             }
-
-            richEditControl.ShowPrintPreview();
+            printForm.Show();
         }
 
         private void bbiNew_ItemClick(object sender, ItemClickEventArgs e)
@@ -141,8 +132,8 @@ namespace TestCollection
 
         private void LoadData()
         {
-            var testItems = Service.TestItemService.GetTestItems().ToList();
-            gridControl.DataSource = testItems;
+            testItems = Service.TestItemService.GetTestItems().ToList();
+            FilterAndBindData(testItems);
         }
 
         private void bbiEdit_ItemClick(object sender, ItemClickEventArgs e)
@@ -182,9 +173,8 @@ namespace TestCollection
                 }
                 var item = gridView.GetRow(rows[0]) as Core.TestItem;
                 Service.TestItemService.Delete(item.ItemId.Value);
-                var dataSource = gridControl.DataSource as List<Core.TestItem>;
-                dataSource.Remove(item);
-                gridView.RefreshData();
+                testItems.Remove(item);
+                FilterAndBindData(testItems);
             }
         }
 
@@ -200,59 +190,76 @@ namespace TestCollection
 
         private void gridView_CustomRowFilter(object sender, DevExpress.XtraGrid.Views.Base.RowFilterEventArgs e)
         {
-            var dataSource = gridView.DataSource as List<Core.TestItem>;
-            var item = dataSource[e.ListSourceRow];
-            //if (!dataSource[e.ListSourceRow].Tags.Split(',').Contains("其他"))
-            //{
-            //    e.Visible = false;
-            //    e.Handled = true;
-            //}
-            e.Visible = ItemFilter(item);
-            e.Handled = true;
+            //var dataSource = gridView.DataSource as List<Core.TestItem>;
+            //var item = dataSource[e.ListSourceRow];
+            ////if (!dataSource[e.ListSourceRow].Tags.Split(',').Contains("其他"))
+            ////{
+            ////    e.Visible = false;
+            ////    e.Handled = true;
+            ////}
+            //e.Visible = ItemFilter(item);
+            //e.Handled = true;
         }
-
-        /// <summary>
-        /// 项目过滤
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns>满足过滤条件返回true,否则false</returns>
-        public bool ItemFilter(Core.TestItem item)
+        
+        public void FilterAndBindData(IEnumerable<Core.TestItem> items)
         {
-            if (!(string.IsNullOrEmpty(conditions.Course) || item.Course == conditions.Course))
+            if (!string.IsNullOrEmpty(conditions.Course))
             {
-                return false;
+                items = items.Where(t => t.Course == conditions.Course);
             }
-            if (!(conditions.Grade == null || item.Grade == conditions.Grade))
+            if (conditions.Grade != null)
             {
-                return false;
+                items = items.Where(t => t.Grade == conditions.Grade);
             }
-            if (!(conditions.Semester == null || item.Semester == conditions.Semester))
+            if (conditions.Semester != null)
             {
-                return false;
+                items = items.Where(t => t.Semester == conditions.Semester);
             }
             if (conditions.Tags != null && conditions.Tags.Count > 0)
             {
-                var tags = item.Tags?.Split(',');
-                if (tags == null || tags.Length == 0)
+                items = items.Where(t =>
                 {
-                    return false;
-                }
-                var containsTag = false;
-                foreach (var tag in tags)
-                {
-                    if (conditions.Tags.Contains(tag))
+                    var tags = t.Tags?.Split(',');
+                    if (tags == null || tags.Length == 0)
                     {
-                        containsTag = true;
-                        break;
+                        return false;
+                    }
+                    return tags.Intersect(conditions.Tags).Count() > 0;
+                });
+            }
+            if (conditions.ItemTypes != null && conditions.ItemTypes.Count > 0)
+            {
+                IEnumerable<Core.TestItem> fi = null;
+                foreach (var item in conditions.ItemTypes)
+                {
+                    if (item.Key == 0 && item.Value > 0)
+                    {
+                        fi = items.OrderBy(t => Guid.NewGuid()).Take(item.Value);
+                    }
+                    else
+                    {
+                        var fii = items.Where(t => t.ItemType == (Core.TestItemType)item.Key);
+                        if (item.Value > 0)
+                        {
+                            fii = fii.OrderBy(t => Guid.NewGuid()).Take(item.Value);
+                        }
+                        if (fi == null)
+                        {
+                            fi = fii;
+                        }
+                        else
+                        {
+                            fi = fi.Union(fii);
+                        }
                     }
                 }
-                if (containsTag == false)
+                if (fi != null)
                 {
-                    return false;
+                    items = fi;
                 }
             }
-            //题型，及随机题数
-            return true;
+
+            gridControl.DataSource = items;
         }
     }
 }

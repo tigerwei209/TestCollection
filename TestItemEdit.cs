@@ -193,7 +193,7 @@ namespace TestCollection
 
         private Core.TestItem CreatNew()
         {
-            return new Core.TestItem() { Grade = Core.GradeEnum.Three, Course = "数学", ItemType = Core.TestItemType.Choose };
+            return new Core.TestItem() { Grade = Core.GradeEnum.Three, Course = "数学", ItemType = Core.TestItemType.QAndA };
         }
         
         private void richEditControl1_DocumentLoaded(object sender, EventArgs e)

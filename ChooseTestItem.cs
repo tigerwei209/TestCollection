@@ -166,6 +166,9 @@ namespace TestCollection
         public Core.GradeEnum? Grade { get; set; }
         public Core.SemesterEnum? Semester { get; set; }
         public List<string> Tags { get; set; }
+        /// <summary>
+        /// 题型 0全部
+        /// </summary>
         public Dictionary<int, int> ItemTypes { get; set; }
     }
 }

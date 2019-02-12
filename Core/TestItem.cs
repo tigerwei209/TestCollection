@@ -12,11 +12,23 @@ namespace TestCollection.Core
     public class TestItem
     {
         public int? ItemId { get; set; }
+        /// <summary>
+        /// 题型
+        /// </summary>
         public TestItemType? ItemType { get; set; }
         public string ItemContent { get; set; }
+        /// <summary>
+        /// 学科
+        /// </summary>
         public string Course { get; set; }
+        /// <summary>
+        /// 年级
+        /// </summary>
         public GradeEnum? Grade { get; set; }
         public string Tags { get; set; }
+        /// <summary>
+        /// 学期
+        /// </summary>
         public SemesterEnum? Semester { get; set; }
     }
 
