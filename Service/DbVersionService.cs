@@ -14,6 +14,13 @@ namespace TestCollection.Service
         };
         public static void UpdateDb()
         {
+            var count = Core.DbContext.Instance.ExecuteScalar<int>("SELECT COUNT(*) FROM sqlite_master where type='table' and name='DbVersion'");
+            if (count == 0)
+            {
+                Core.DbContext.Instance.Execute(@"CREATE TABLE [DbVersion](
+  [id] INTEGER PRIMARY KEY,
+  [version] INTEGER)");
+            }
             var dbVersion = Core.DbContext.Instance.SingleOrDefault<Core.DbVersion>(1);
             if (dbVersion == null)
             {
