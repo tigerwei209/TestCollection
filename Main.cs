@@ -215,6 +215,10 @@ namespace TestCollection
             {
                 items = items.Where(t => t.Semester == conditions.Semester);
             }
+            if (conditions.Score != null && conditions.Score != 0)
+            {
+                items = items.Where(t => t.Score == conditions.Score);
+            }
             if (conditions.Tags != null && conditions.Tags.Count > 0)
             {
                 items = items.Where(t =>

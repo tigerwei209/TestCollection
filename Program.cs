@@ -46,7 +46,9 @@ namespace TestCollection
             DevExpress.Utils.AppearanceObject.DefaultFont = new System.Drawing.Font("宋体", 10.5f);  //默认字体
             WindowsFormsSettings.DefaultFont = DevExpress.Utils.AppearanceObject.DefaultFont;
             WindowsFormsSettings.DefaultMenuFont = DevExpress.Utils.AppearanceObject.DefaultFont;
-            
+
+            Service.DbVersionService.UpdateDb();
+
             Application.Run(new Main());
         }
 

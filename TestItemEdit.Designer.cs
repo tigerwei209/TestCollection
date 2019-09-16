@@ -30,14 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestItemEdit));
-            DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup1 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
-            DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup2 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
-            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation1 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
+            DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup3 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
+            DevExpress.XtraBars.Ribbon.GalleryItemGroup galleryItemGroup4 = new DevExpress.XtraBars.Ribbon.GalleryItemGroup();
+            DevExpress.XtraBars.Ribbon.ReduceOperation reduceOperation2 = new DevExpress.XtraBars.Ribbon.ReduceOperation();
             this.stylesRibbonPageGroup1 = new DevExpress.XtraRichEdit.UI.StylesRibbonPageGroup();
             this.galleryChangeStyleItem1 = new DevExpress.XtraRichEdit.UI.GalleryChangeStyleItem();
             this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-            this.richEditControl1 = new DevExpress.XtraRichEdit.RichEditControl();
-            this.testItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.scoreControl = new DevExpress.XtraEditors.RatingControl();
             this.mainRibbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bbiSave = new DevExpress.XtraBars.BarButtonItem();
             this.bbiSaveAndClose = new DevExpress.XtraBars.BarButtonItem();
@@ -64,6 +63,8 @@
             this.repositoryItemFontEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemFontEdit();
             this.changeFontSizeItem1 = new DevExpress.XtraRichEdit.UI.ChangeFontSizeItem();
             this.repositoryItemRichEditFontSizeEdit1 = new DevExpress.XtraRichEdit.Design.RepositoryItemRichEditFontSizeEdit();
+            this.richEditControl1 = new DevExpress.XtraRichEdit.RichEditControl();
+            this.testItemBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fontSizeIncreaseItem1 = new DevExpress.XtraRichEdit.UI.FontSizeIncreaseItem();
             this.fontSizeDecreaseItem1 = new DevExpress.XtraRichEdit.UI.FontSizeDecreaseItem();
             this.barButtonGroup2 = new DevExpress.XtraBars.BarButtonGroup();
@@ -313,13 +314,15 @@
             this.ItemForItemType = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForTags = new DevExpress.XtraLayout.LayoutControlItem();
             this.ItemForSemester = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.richEditBarController1 = new DevExpress.XtraRichEdit.UI.RichEditBarController(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
             this.dataLayoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.testItemBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scoreControl.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainRibbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemFontEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemRichEditFontSizeEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.testItemBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemBorderLineStyle1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemBorderLineWeight1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemFloatingObjectOutlineWeight1)).BeginInit();
@@ -336,6 +339,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ItemForItemType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForTags)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForSemester)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -352,7 +356,7 @@
             // 
             this.galleryChangeStyleItem1.Gallery.ColumnCount = 10;
             this.galleryChangeStyleItem1.Gallery.Groups.AddRange(new DevExpress.XtraBars.Ribbon.GalleryItemGroup[] {
-            galleryItemGroup1});
+            galleryItemGroup3});
             this.galleryChangeStyleItem1.Gallery.ImageSize = new System.Drawing.Size(65, 46);
             this.galleryChangeStyleItem1.Id = 71;
             this.galleryChangeStyleItem1.Name = "galleryChangeStyleItem1";
@@ -360,6 +364,7 @@
             // dataLayoutControl1
             // 
             this.dataLayoutControl1.AllowCustomization = false;
+            this.dataLayoutControl1.Controls.Add(this.scoreControl);
             this.dataLayoutControl1.Controls.Add(this.richEditControl1);
             this.dataLayoutControl1.Controls.Add(this.CourseComboBoxEdit);
             this.dataLayoutControl1.Controls.Add(this.ItemTypeImageComboBoxEdit);
@@ -370,28 +375,26 @@
             this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataLayoutControl1.Location = new System.Drawing.Point(0, 150);
             this.dataLayoutControl1.Name = "dataLayoutControl1";
-            this.dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(354, 325, 650, 400);
+            this.dataLayoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(372, 212, 650, 400);
             this.dataLayoutControl1.Root = this.layoutControlGroup1;
             this.dataLayoutControl1.Size = new System.Drawing.Size(918, 469);
             this.dataLayoutControl1.TabIndex = 0;
             // 
-            // richEditControl1
+            // scoreControl
             // 
-            this.richEditControl1.ActiveViewType = DevExpress.XtraRichEdit.RichEditViewType.Simple;
-            this.richEditControl1.DataBindings.Add(new System.Windows.Forms.Binding("HtmlText", this.testItemBindingSource, "ItemContent", true));
-            this.richEditControl1.Location = new System.Drawing.Point(75, 60);
-            this.richEditControl1.MenuManager = this.mainRibbonControl;
-            this.richEditControl1.Name = "richEditControl1";
-            this.richEditControl1.Options.HorizontalRuler.Visibility = DevExpress.XtraRichEdit.RichEditRulerVisibility.Hidden;
-            this.richEditControl1.Options.VerticalRuler.Visibility = DevExpress.XtraRichEdit.RichEditRulerVisibility.Hidden;
-            this.richEditControl1.Size = new System.Drawing.Size(831, 397);
-            this.richEditControl1.TabIndex = 4;
-            this.richEditControl1.Views.SimpleView.Padding = new System.Windows.Forms.Padding(4, 4, 4, 0);
-            this.richEditControl1.DocumentLoaded += new System.EventHandler(this.richEditControl1_DocumentLoaded);
-            // 
-            // testItemBindingSource
-            // 
-            this.testItemBindingSource.DataSource = typeof(TestCollection.Core.TestItem);
+            this.scoreControl.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.testItemBindingSource, "Score", true));
+            this.scoreControl.Location = new System.Drawing.Point(75, 36);
+            this.scoreControl.MenuManager = this.mainRibbonControl;
+            this.scoreControl.Name = "scoreControl";
+            this.scoreControl.Rating = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.scoreControl.Size = new System.Drawing.Size(87, 16);
+            this.scoreControl.StyleController = this.dataLayoutControl1;
+            this.scoreControl.TabIndex = 17;
+            this.scoreControl.Text = "ratingControl1";
             // 
             // mainRibbonControl
             // 
@@ -819,6 +822,24 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.repositoryItemRichEditFontSizeEdit1.Control = this.richEditControl1;
             this.repositoryItemRichEditFontSizeEdit1.Name = "repositoryItemRichEditFontSizeEdit1";
+            // 
+            // richEditControl1
+            // 
+            this.richEditControl1.ActiveViewType = DevExpress.XtraRichEdit.RichEditViewType.Simple;
+            this.richEditControl1.DataBindings.Add(new System.Windows.Forms.Binding("HtmlText", this.testItemBindingSource, "ItemContent", true));
+            this.richEditControl1.Location = new System.Drawing.Point(75, 80);
+            this.richEditControl1.MenuManager = this.mainRibbonControl;
+            this.richEditControl1.Name = "richEditControl1";
+            this.richEditControl1.Options.HorizontalRuler.Visibility = DevExpress.XtraRichEdit.RichEditRulerVisibility.Hidden;
+            this.richEditControl1.Options.VerticalRuler.Visibility = DevExpress.XtraRichEdit.RichEditRulerVisibility.Hidden;
+            this.richEditControl1.Size = new System.Drawing.Size(831, 377);
+            this.richEditControl1.TabIndex = 4;
+            this.richEditControl1.Views.SimpleView.Padding = new System.Windows.Forms.Padding(4, 4, 4, 0);
+            this.richEditControl1.DocumentLoaded += new System.EventHandler(this.richEditControl1_DocumentLoaded);
+            // 
+            // testItemBindingSource
+            // 
+            this.testItemBindingSource.DataSource = typeof(TestCollection.Core.TestItem);
             // 
             // fontSizeIncreaseItem1
             // 
@@ -1682,7 +1703,7 @@
             // 
             this.galleryChangeTableStyleItem1.Gallery.ColumnCount = 3;
             this.galleryChangeTableStyleItem1.Gallery.Groups.AddRange(new DevExpress.XtraBars.Ribbon.GalleryItemGroup[] {
-            galleryItemGroup2});
+            galleryItemGroup4});
             this.galleryChangeTableStyleItem1.Gallery.ImageSize = new System.Drawing.Size(65, 46);
             this.galleryChangeTableStyleItem1.Id = 177;
             this.galleryChangeTableStyleItem1.ModifyItemLink = null;
@@ -2182,12 +2203,12 @@
             this.stylesRibbonPageGroup1,
             this.editingRibbonPageGroup1});
             this.homeRibbonPage1.Name = "homeRibbonPage1";
-            reduceOperation1.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.UntilAvailable;
-            reduceOperation1.Group = this.stylesRibbonPageGroup1;
-            reduceOperation1.ItemLinkIndex = 0;
-            reduceOperation1.ItemLinksCount = 0;
-            reduceOperation1.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
-            this.homeRibbonPage1.ReduceOperations.Add(reduceOperation1);
+            reduceOperation2.Behavior = DevExpress.XtraBars.Ribbon.ReduceOperationBehavior.UntilAvailable;
+            reduceOperation2.Group = this.stylesRibbonPageGroup1;
+            reduceOperation2.ItemLinkIndex = 0;
+            reduceOperation2.ItemLinksCount = 0;
+            reduceOperation2.Operation = DevExpress.XtraBars.Ribbon.ReduceOperationType.Gallery;
+            this.homeRibbonPage1.ReduceOperations.Add(reduceOperation2);
             this.homeRibbonPage1.Text = "题目";
             // 
             // clipboardRibbonPageGroup1
@@ -2262,7 +2283,7 @@
             // TagsTokenEdit
             // 
             this.TagsTokenEdit.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.testItemBindingSource, "Tags", true));
-            this.TagsTokenEdit.Location = new System.Drawing.Point(75, 36);
+            this.TagsTokenEdit.Location = new System.Drawing.Point(75, 56);
             this.TagsTokenEdit.Name = "TagsTokenEdit";
             this.TagsTokenEdit.Properties.EditMode = DevExpress.XtraEditors.TokenEditMode.Manual;
             this.TagsTokenEdit.Properties.Separators.AddRange(new string[] {
@@ -2307,7 +2328,8 @@
             this.ItemForGrade,
             this.ItemForItemType,
             this.ItemForTags,
-            this.ItemForSemester});
+            this.ItemForSemester,
+            this.layoutControlItem2});
             this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup2.Name = "autoGeneratedGroup0";
             this.layoutControlGroup2.Size = new System.Drawing.Size(898, 449);
@@ -2315,9 +2337,9 @@
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.richEditControl1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 48);
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 68);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(898, 401);
+            this.layoutControlItem1.Size = new System.Drawing.Size(898, 381);
             this.layoutControlItem1.Text = "题目内容：";
             this.layoutControlItem1.TextSize = new System.Drawing.Size(60, 14);
             // 
@@ -2351,7 +2373,7 @@
             // ItemForTags
             // 
             this.ItemForTags.Control = this.TagsTokenEdit;
-            this.ItemForTags.Location = new System.Drawing.Point(0, 24);
+            this.ItemForTags.Location = new System.Drawing.Point(0, 44);
             this.ItemForTags.Name = "ItemForTags";
             this.ItemForTags.Size = new System.Drawing.Size(898, 24);
             this.ItemForTags.Text = "标签：";
@@ -2365,6 +2387,15 @@
             this.ItemForSemester.Size = new System.Drawing.Size(224, 24);
             this.ItemForSemester.Text = "学期：";
             this.ItemForSemester.TextSize = new System.Drawing.Size(60, 14);
+            // 
+            // layoutControlItem2
+            // 
+            this.layoutControlItem2.Control = this.scoreControl;
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 24);
+            this.layoutControlItem2.Name = "layoutControlItem2";
+            this.layoutControlItem2.Size = new System.Drawing.Size(898, 20);
+            this.layoutControlItem2.Text = "评分：";
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(60, 14);
             // 
             // richEditBarController1
             // 
@@ -2623,10 +2654,11 @@
             this.Load += new System.EventHandler(this.TestItemEdit_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
             this.dataLayoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.testItemBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scoreControl.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainRibbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemFontEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemRichEditFontSizeEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.testItemBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemBorderLineStyle1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemBorderLineWeight1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemFloatingObjectOutlineWeight1)).EndInit();
@@ -2643,6 +2675,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ItemForItemType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForTags)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemForSemester)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.richEditBarController1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2931,5 +2964,7 @@
         private DevExpress.XtraEditors.TokenEdit TagsTokenEdit;
         private DevExpress.XtraEditors.ImageComboBoxEdit SemesterImageComboBoxEdit;
         private DevExpress.XtraLayout.LayoutControlItem ItemForSemester;
+        private DevExpress.XtraEditors.RatingControl scoreControl;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
     }
 }

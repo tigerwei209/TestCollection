@@ -30,6 +30,10 @@ namespace TestCollection.Core
         /// 学期
         /// </summary>
         public SemesterEnum? Semester { get; set; }
+        /// <summary>
+        /// 评分
+        /// </summary>
+        public int? Score { get; set; }
     }
 
     public enum TestItemType

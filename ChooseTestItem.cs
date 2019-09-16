@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using DevExpress.XtraLayout;
-using DevExpress.XtraLayout.Utils;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace TestCollection
 {
@@ -128,6 +120,8 @@ namespace TestCollection
             }
             Main.conditions.Tags = tags;
 
+            Main.conditions.Score = Convert.ToInt32(rcScore.EditValue);
+
             Dictionary<int, int> itemTypes = new Dictionary<int, int>();
             foreach (var item in testItemTypeControls)
             {
@@ -170,5 +164,6 @@ namespace TestCollection
         /// 题型 0全部
         /// </summary>
         public Dictionary<int, int> ItemTypes { get; set; }
+        public int? Score { get; set; }
     }
 }

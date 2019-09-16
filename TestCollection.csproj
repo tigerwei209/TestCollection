@@ -126,6 +126,7 @@
       <DependentUpon>ChooseTestItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\DbContext.cs" />
+    <Compile Include="Core\DbVersion.cs" />
     <Compile Include="Core\TestItem.cs" />
     <Compile Include="Core\TestItemTag.cs" />
     <Compile Include="PrintForm.cs">
@@ -147,6 +148,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Service\DbVersionService.cs" />
     <Compile Include="Service\TestItemService.cs" />
     <Compile Include="Service\TestItemTagService.cs" />
     <Compile Include="SplashForm.cs">

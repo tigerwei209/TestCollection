@@ -49,6 +49,8 @@
             this.ceNoLimit = new DevExpress.XtraEditors.CheckEdit();
             this.seNoLimit = new DevExpress.XtraEditors.SpinEdit();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+            this.rcScore = new DevExpress.XtraEditors.RatingControl();
             ((System.ComponentModel.ISupportInitialize)(this.cbGrade.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbSemester.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
@@ -64,6 +66,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.seQAndA.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ceNoLimit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.seNoLimit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rcScore.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // cbGrade
@@ -114,7 +117,7 @@
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(198, 283, 650, 400);
             this.layoutControl1.Root = this.layoutControlGroup1;
-            this.layoutControl1.Size = new System.Drawing.Size(439, 149);
+            this.layoutControl1.Size = new System.Drawing.Size(439, 121);
             this.layoutControl1.TabIndex = 2;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -126,7 +129,7 @@
             this.layoutControlGroup2});
             this.layoutControlGroup1.Name = "Root";
             this.layoutControlGroup1.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            this.layoutControlGroup1.Size = new System.Drawing.Size(439, 149);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(439, 121);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlGroup2
@@ -136,7 +139,7 @@
             this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup2.Name = "layoutControlGroup2";
             this.layoutControlGroup2.Padding = new DevExpress.XtraLayout.Utils.Padding(0, 0, 0, 0);
-            this.layoutControlGroup2.Size = new System.Drawing.Size(439, 149);
+            this.layoutControlGroup2.Size = new System.Drawing.Size(439, 121);
             this.layoutControlGroup2.TextVisible = false;
             // 
             // btnOk
@@ -297,6 +300,27 @@
             this.simpleButton1.Text = "重置";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
+            // labelControl4
+            // 
+            this.labelControl4.Location = new System.Drawing.Point(29, 198);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(36, 14);
+            this.labelControl4.TabIndex = 8;
+            this.labelControl4.Text = "评分：";
+            // 
+            // rcScore
+            // 
+            this.rcScore.Location = new System.Drawing.Point(71, 198);
+            this.rcScore.Name = "rcScore";
+            this.rcScore.Rating = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.rcScore.Size = new System.Drawing.Size(87, 16);
+            this.rcScore.TabIndex = 9;
+            this.rcScore.Text = "ratingControl1";
+            // 
             // ChooseTestItem
             // 
             this.AcceptButton = this.btnOk;
@@ -304,6 +328,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(534, 385);
+            this.Controls.Add(this.rcScore);
+            this.Controls.Add(this.labelControl4);
             this.Controls.Add(this.simpleButton1);
             this.Controls.Add(this.seQAndA);
             this.Controls.Add(this.seFill);
@@ -345,6 +371,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.seQAndA.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ceNoLimit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.seNoLimit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rcScore.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -373,5 +400,7 @@
         private DevExpress.XtraEditors.CheckEdit ceNoLimit;
         private DevExpress.XtraEditors.SpinEdit seNoLimit;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.LabelControl labelControl4;
+        private DevExpress.XtraEditors.RatingControl rcScore;
     }
 }
